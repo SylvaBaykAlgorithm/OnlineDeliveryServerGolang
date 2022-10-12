@@ -1,43 +1,35 @@
 package users
 
 import (
-	"os/exec"
+	"errors"
 )
 
-type User struct {
-	fName       string
-	lName       string
-	address     string
-	city        string
-	state       string
-	zipcode     string
-	uid         string
-	phoneNumber string
-}
-
-func CreateUser(fName, lName, address, city, state, zipcode, phoneNumber string) User {
-
-	var fakeUser User
-	var uuid, err = exec.Command("uuidgen").Output()
-	if err != nil {
-	} else {
-		fakeUser.uid = string(uuid)
+func CreateUser(user User) (string, error) {
+	var newUser UserRequest
+	// var uuid, err = exec.Command("uuidgen").Output()
+	// if err != nil {
+	// } else {
+	// 	fakeUser.uid = string(uuid)
+	// }
+	newUser.FName = user.FName
+	newUser.LName = user.LName
+	newUser.Address = user.Address
+	newUser.City = user.City
+	newUser.State = user.State
+	newUser.Zipcode = user.Zipcode
+	newUser.PhoneNumber = user.PhoneNumber
+	if newUser.FName == "" {
+		return "", errors.New("No First Name")
 	}
-	fakeUser.fName = fName
-	fakeUser.lName = lName
-	fakeUser.address = address
-	fakeUser.city = city
-	fakeUser.state = state
-	fakeUser.zipcode = zipcode
-	fakeUser.phoneNumber = phoneNumber
-	return fakeUser
+
+	return newUser.FName, nil
 }
 
 func Checkout() string {
 	return "OK"
 }
 
-func DoGetUser(user User) User {
+func GetUser(user User) User {
 
 	return user
 }
